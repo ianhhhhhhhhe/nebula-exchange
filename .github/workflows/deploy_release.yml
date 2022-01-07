@@ -64,12 +64,12 @@ jobs:
           ./ossutil64 -e ${{ secrets.OSS_ENDPOINT }} \
             -i ${{ secrets.OSS_ID }} \
             -k ${{ secrets.OSS_SECRET }} \
-            -f cp nebula-exchange_spark_2.2/target/nebula-exchange_spark_2.2-${{ steps.get_version.output.VERSION}}.jar oss://nebula-graph/maven2/nebula-exchange/${{ steps.get_version.output.VERSION }}/nebula-exchange_spark_2.2-${{ gsteps.get_version.output.VERSION }}.jar
+            -f cp nebula-exchange_spark_2.2/target/nebula-exchange_spark_2.2-${{ steps.get_version.output.VERSION}}.jar oss://nebula-graph/maven2/nebula-exchange/${{ steps.get_version.output.VERSION }}/nebula-exchange_spark_2.2-${{ steps.get_version.output.VERSION }}.jar
           ./ossutil64 -e ${{ secrets.OSS_ENDPOINT }} \
             -i ${{ secrets.OSS_ID }} \
             -k ${{ secrets.OSS_SECRET }} \
-            -f cp nebula-exchange_spark_2.4/target/nebula-exchange_spark_2.4-${{ steps.get_version.output.VERSION }}.jar oss://nebula-graph/maven2/nebula-exchange/${{ steps.get_version.output.VERSION }}/nebula-exchange_spark_2.4-${{ gsteps.get_version.output.VERSION }}.jar
+            -f cp nebula-exchange_spark_2.4/target/nebula-exchange_spark_2.4-${{ steps.get_version.output.VERSION }}.jar oss://nebula-graph/maven2/nebula-exchange/${{ steps.get_version.output.VERSION }}/nebula-exchange_spark_2.4-${{ steps.get_version.output.VERSION }}.jar
           ./ossutil64 -e ${{ secrets.OSS_ENDPOINT }} \
             -i ${{ secrets.OSS_ID }} \
             -k ${{ secrets.OSS_SECRET }} \
-            -f cp nebula-exchange_spark_3.0/target/nebula-exchange_spark_3.0-${{ gsteps.get_version.output.VERSION }}.jar oss://nebula-graph/maven2/nebula-exchange/${{ steps.get_version.output.VERSION }}/nebula-exchange_spark_3.0-${{ gsteps.get_version.output.VERSION }}.jar
+            -f cp nebula-exchange_spark_3.0/target/nebula-exchange_spark_3.0-${{ steps.get_version.output.VERSION }}.jar oss://nebula-graph/maven2/nebula-exchange/${{ steps.get_version.output.VERSION }}/nebula-exchange_spark_3.0-${{ steps.get_version.output.VERSION }}.jar
