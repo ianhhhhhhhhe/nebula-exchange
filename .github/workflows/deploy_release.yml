@@ -45,7 +45,12 @@ jobs:
 
       - name: Get the version
         id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+        run: |
+          tag=$(echo ${{ github.ref }} | rev | cut -d/ -f1 | rev)
+          tagnum=$(echo $tag | sed 's/^v//')
+          echo "::set-output name=tag::$tag"
+          echo "::set-output name=tagnum::$tagnum"
+        shell: bash
 
       - name: upload to release assets
         uses: softprops/action-gh-release@v1
@@ -53,9 +58,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           files: |
-            nebula-exchange_spark_2.2/target/nebula-exchange_spark_2.2-${{ steps.get_version.output.VERSION }}.jar
-            nebula-exchange_spark_2.4/target/nebula-exchange_spark_2.4-${{ steps.get_version.output.VERSION }}.jar
-            nebula-exchange_spark_3.0/target/nebula-exchange_spark_3.0-${{ steps.get_version.output.VERSION }}.jar
+            nebula-exchange_spark_2.2/target/nebula-exchange_spark_2.2-${{ steps.get_version.output.tagnum }}.jar
+            nebula-exchange_spark_2.4/target/nebula-exchange_spark_2.4-${{ steps.get_version.output.tagnum }}.jar
+            nebula-exchange_spark_3.0/target/nebula-exchange_spark_3.0-${{ steps.get_version.output.tagnum }}.jar
 
       - name: upload to oss
         run: |
@@ -64,12 +69,12 @@ jobs:
           ./ossutil64 -e ${{ secrets.OSS_ENDPOINT }} \
             -i ${{ secrets.OSS_ID }} \
             -k ${{ secrets.OSS_SECRET }} \
-            -f cp nebula-exchange_spark_2.2/target/nebula-exchange_spark_2.2-${{ steps.get_version.output.VERSION}}.jar oss://nebula-graph/maven2/nebula-exchange/${{ steps.get_version.output.VERSION }}/nebula-exchange_spark_2.2-${{ steps.get_version.output.VERSION }}.jar
+            -f cp nebula-exchange_spark_2.2/target/nebula-exchange_spark_2.2-${{ steps.get_version.output.tagnum}}.jar oss://nebula-graph/maven2/nebula-exchange/${{ steps.get_version.output.tagnum }}/nebula-exchange_spark_2.2-${{ steps.get_version.output.tagnum }}.jar
           ./ossutil64 -e ${{ secrets.OSS_ENDPOINT }} \
             -i ${{ secrets.OSS_ID }} \
             -k ${{ secrets.OSS_SECRET }} \
-            -f cp nebula-exchange_spark_2.4/target/nebula-exchange_spark_2.4-${{ steps.get_version.output.VERSION }}.jar oss://nebula-graph/maven2/nebula-exchange/${{ steps.get_version.output.VERSION }}/nebula-exchange_spark_2.4-${{ steps.get_version.output.VERSION }}.jar
+            -f cp nebula-exchange_spark_2.4/target/nebula-exchange_spark_2.4-${{ steps.get_version.output.tagnum }}.jar oss://nebula-graph/maven2/nebula-exchange/${{ steps.get_version.output.tagnum }}/nebula-exchange_spark_2.4-${{ steps.get_version.output.tagnum }}.jar
           ./ossutil64 -e ${{ secrets.OSS_ENDPOINT }} \
             -i ${{ secrets.OSS_ID }} \
             -k ${{ secrets.OSS_SECRET }} \
-            -f cp nebula-exchange_spark_3.0/target/nebula-exchange_spark_3.0-${{ steps.get_version.output.VERSION }}.jar oss://nebula-graph/maven2/nebula-exchange/${{ steps.get_version.output.VERSION }}/nebula-exchange_spark_3.0-${{ steps.get_version.output.VERSION }}.jar
+            -f cp nebula-exchange_spark_3.0/target/nebula-exchange_spark_3.0-${{ steps.get_version.output.tagnum }}.jar oss://nebula-graph/maven2/nebula-exchange/${{ steps.get_version.output.tagnum }}/nebula-exchange_spark_3.0-${{ steps.get_version.output.tagnum }}.jar
